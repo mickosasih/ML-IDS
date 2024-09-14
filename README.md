@@ -27,7 +27,15 @@ The trained classifier employs a Bagging Decision Tree model with nearmiss data 
      - `NETWORK_INTERFACE`: Specify the network interface you want to monitor (e.g., `eth0`, `ens33`).
    - Refer to the [CICFlowMeter repository](https://github.com/hieulw/cicflowmeter) for detailed instructions.
 ## Usage
+1. Run the application using the following command:
+   ```
+   python app.py
+   ```
 
+2. Access the web interface at [http://localhost:5000/](http://localhost:5000/).
+
+3. Click "Start CICFlowMeter" to begin sniffing network traffic.
+4. Click "Stop CICFlowMeter" to stop the sniffing process.
 ## References
 1. https://github.com/hieulw/cicflowmeter
 2. https://www.unb.ca/cic/datasets/ids-2017.html
