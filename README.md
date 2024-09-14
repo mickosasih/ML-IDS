@@ -25,7 +25,6 @@ The trained classifier employs a Bagging Decision Tree model with nearmiss data 
    - Update the following configuration settings in `app.py`:
      - `ML_API_URL`: Set this to the appropriate URL for your machine learning API.
      - `NETWORK_INTERFACE`: Specify the network interface you want to monitor (e.g., `eth0`, `ens33`).
-   - Refer to the [CICFlowMeter repository](https://github.com/hieulw/cicflowmeter) for detailed instructions.
 ## Usage
 1. Run the application using the following command:
    ```
@@ -36,6 +35,7 @@ The trained classifier employs a Bagging Decision Tree model with nearmiss data 
 
 3. Click "Start CICFlowMeter" to begin sniffing network traffic.
 4. Click "Stop CICFlowMeter" to stop the sniffing process.
+5. To refresh the displayed data, simply reload the web page.
 ## References
 1. https://github.com/hieulw/cicflowmeter
 2. https://www.unb.ca/cic/datasets/ids-2017.html
