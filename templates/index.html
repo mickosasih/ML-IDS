@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Machine Learning IDS</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='filter.js') }}"></script>
+    <!-- Start/Stop CICFlowMeter -->
+    <script>
+        $(document).ready(function(){
+            $('#startButton').click(function(){
+                $.post('/start-cicflowmeter', function(data){
+                    alert(data.message);
+                });
+            });
+            $('#stopButton').click(function(){
+                $.post('/stop-cicflowmeter', function(data){
+                    alert(data.message);
+                });
+            });
+        });
+    </script>
+    
+</head>
+<body>
+    <!-- Start/Stop CICFlowMeter -->
+    <button id="startButton">Start CICFlowMeter</button>
+    <button id="stopButton">Stop CICFlowMeter</button>
+    <h1>Classification Results</h1>
+    <!-- Display Images -->
+    <img src="data:image/png;base64,{{ plot_url }}">
+    <h2>Maximum Time : {{max}} milliseconds</h2>
+    <h2>Minimum Time : {{min}} milliseconds</h2>
+    <h2>Average Time : {{mean}} milliseconds</h2>
+    <!-- Display Results -->
+    <table class="table table-striped" id="result-table">
+        <thead>
+        <tr>
+            <th col-index = 1>Timestamp
+                <a id="sort" onclick="sortTable(0)">🔽</a>
+                <br>
+                <input type="text" placeholder="Search.." value="" list="timestamp" class="table-filter" oninput="filter_rows()">
+                <datalist class="table-unique" id="timestamp">
+                </datalist>
+            </th>
+            <th col-index = 2>Source IP
+                <input type="text" placeholder="Search.." value="" list="source_ip" class="table-filter" oninput="filter_rows()">
+                <datalist class="table-unique" id="source_ip"></datalist>
+            </th>
+            <th col-index = 3>Source Port
+                <input type="text" placeholder="Search.." value="" list="source_port" class="table-filter" oninput="filter_rows()">
+                <datalist class="table-unique" id="source_port"></datalist>
+            </th>
+            <th col-index = 4>Destination IP
+                <input type="text" placeholder="Search.." value="" list="destination_ip" class="table-filter" oninput="filter_rows()">
+                <datalist class="table-unique" id="destination_ip"></datalist>
+            </th>
+            <th col-index = 5>Destination Port
+                <input type="text" placeholder="Search.." value="" list="destination_port" class="table-filter" oninput="filter_rows()">
+                <datalist class="table-unique" id="destination_port"></datalist>
+            </th>
+            <th col-index = 6>Prediction
+                <input type="text" placeholder="Search.." value="" list="prediction" class="table-filter" oninput="filter_rows()">
+                <datalist class="table-unique" id="prediction"></datalist>
+            </th>
+            <th col-index = 7>Probability
+                <input type="text" placeholder="Search.." value="" list="probability" class="table-filter" oninput="filter_rows()">
+                <datalist class="table-unique" id="probability"></datalist>
+            </th>
+            <th col-index = 8>Predict Execution Time
+                <input type="text" placeholder="Search.." value="" list="time" class="table-filter" oninput="filter_rows()">
+                <datalist class="table-unique" id="time"></datalist>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for record in records | sort(attribute='timestamp', reverse=True) %}
+        <tr>
+            <td class="filterable-cell">{{ record['timestamp'] }}</td>
+            <td class="filterable-cell">{{ record['src_ip'] }}</td>
+            <td class="filterable-cell">{{ record['src_port'] }}</td>
+            <td class="filterable-cell">{{ record['dst_ip'] }}</td>
+            <td class="filterable-cell">{{ record[' Destination Port'] }}</td>
+            <td class="filterable-cell" id="labelCell" style="{{ 'color:green' if record['Label'] == 'BENIGN' else 'color:red' }}">{{ record['Label'] }}</td>
+            <td class="filterable-cell">{{ record['Probability'] }}</td>
+            <td class="filterable-cell">{{ record['Predict Execution Time'] }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <script>
+        window.onload = () => {
+            console.log(document.querySelector("#result-table > tbody > tr:nth-child(1) > td:nth-child(2) ").innerHTML);
+        };
+
+        getUniqueValuesFromColumn()
+        
+    </script>
+
+</body>
+</html>
